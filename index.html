@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>لعبة سين وجيم</title>
+  <style>
+    body {
+      font-family: 'Tahoma', sans-serif;
+      direction: rtl;
+      text-align: center;
+      background-color: #f2f2f2;
+    }
+    .game-container {
+      max-width: 500px;
+      margin: 50px auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    #options button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px;
+      width: 80%;
+      cursor: pointer;
+      background-color: #eee;
+      border: none;
+      border-radius: 5px;
+    }
+    #options button:hover {
+      background-color: #dcdcdc;
+    }
+    #next-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <h1>لعبة سين وجيم</h1>
+    <div id="question-box">
+      <p id="question">تحميل السؤال...</p>
+      <div id="options"></div>
+    </div>
+    <button id="next-btn">التالي</button>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "ما هي عاصمة فرنسا؟",
+        options: ["لندن", "باريس", "روما", "مدريد"],
+        answer: "باريس"
+      },
+      {
+        question: "ما هو أقرب كوكب إلى الشمس؟",
+        options: ["الأرض", "المريخ", "عطارد", "زحل"],
+        answer: "عطارد"
+      },
+      {
+        question: "من مؤسس شركة مايكروسوفت؟",
+        options: ["ستيف جوبز", "بيل غيتس", "مارك زوكربيرغ", "إيلون ماسك"],
+        answer: "بيل غيتس"
+      }
+    ];
+
+    let current = 0;
+
+    function loadQuestion() {
+      const q = questions[current];
+      document.getElementById('question').textContent = q.question;
+      const optionsDiv = document.getElementById('options');
+      optionsDiv.innerHTML = '';
+      q.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.textContent = opt;
+        btn.onclick = () => {
+          if (opt === q.answer) {
+            alert('إجابة صحيحة!');
+          } else {
+            alert('إجابة خاطئة!');
+          }
+        };
+        optionsDiv.appendChild(btn);
+      });
+    }
+
+    document.getElementById('next-btn').onclick = () => {
+      current = (current + 1) % questions.length;
+      loadQuestion();
+    };
+
+    window.onload = loadQuestion;
+  </script>
+</body>
+</html>
